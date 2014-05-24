@@ -41,4 +41,11 @@ public class OrderService {
 	public void addNew(OrderAddRequest order) {
 		orderDao.add(order.getOrder(foodDao));
 	}
+
+	@Path("{id}/confirm")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public void confirmOrder(@PathParam("id") int id) {
+		orderDao.confirm(id);
+	}
 }

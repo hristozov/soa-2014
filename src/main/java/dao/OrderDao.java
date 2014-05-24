@@ -11,4 +11,5 @@ public interface OrderDao {
 	Order getById(int id);
 	void remove(int id);
 	int add(Order order);
+	void confirm(int id);
 }

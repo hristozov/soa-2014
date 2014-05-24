@@ -65,6 +65,14 @@ public class OrderDaoImpl implements OrderDao {
 		return order.id;
 	}
 
+	@Override
+	public void confirm(int id) {
+		Order order = getById(id);
+		if (order != null) {
+			order.confirmed = true;
+		}
+	}
+
 	private int getNextId() {
 		int maxId = 0;
 		for (Order order : orders) {

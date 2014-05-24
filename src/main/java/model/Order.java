@@ -7,6 +7,7 @@ import java.util.List;
 public class Order {
 	public int id;
 	public List<Food> contents;
+	public boolean confirmed = false;
 
 	public Order(int id, List<Food> contents) {
 		this.id = id;

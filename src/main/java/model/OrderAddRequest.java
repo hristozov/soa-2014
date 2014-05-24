@@ -3,9 +3,11 @@ package model;
 import dao.FoodDao;
 import dao.OrderDao;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement
 public class OrderAddRequest {
 	public List<Integer> contents;
 
