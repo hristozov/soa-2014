@@ -6,7 +6,12 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
 import com.sun.jersey.guice.spi.container.GuiceComponentProviderFactory;
+import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.NetworkListener;
+import org.glassfish.grizzly.jaxws.JaxwsHandler;
+import service.FoodService;
+import service.OrderService;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -14,7 +19,7 @@ import java.net.URI;
 
 public class Main {
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost/").port(8080).build();
+		return UriBuilder.fromUri("http://0.0.0.0/").port(8080).build();
 	}
 
 	public static void main(String[] args) {
@@ -28,6 +33,14 @@ public class Main {
 		HttpServer server = null;
 		try {
 			server = GrizzlyServerFactory.createHttpServer(getBaseURI() + "services/", rc, ioc);
+
+			HttpHandler foodHttpHandler = new JaxwsHandler(injector.getInstance(FoodService.class));
+			HttpHandler orderHttpHandler = new JaxwsHandler(injector.getInstance(OrderService.class));
+			NetworkListener networkListener = new NetworkListener("jaxws-listener", "0.0.0.0", 8081);
+			server.getServerConfiguration().addHttpHandler(foodHttpHandler, "/food");
+			server.getServerConfiguration().addHttpHandler(orderHttpHandler, "/order");
+			server.addListener(networkListener);
+
 			server.start();
 			Thread.currentThread().join();
 		} catch (IOException | InterruptedException e) {
