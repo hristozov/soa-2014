@@ -1,10 +1,12 @@
 package dao;
 
+import com.google.inject.Singleton;
 import model.Food;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class FoodDaoImpl implements FoodDao {
 	private List<Food> foods;
 

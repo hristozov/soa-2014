@@ -16,14 +16,13 @@ public class FoodService {
 	@Inject
 	public FoodDao foodDao;
 
-	@Path("list")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Food> list() {
 		return foodDao.listFoods();
 	}
 
-	@Path("get/{id}")
+	@Path("{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Food getById(@PathParam("id") int id) {
