@@ -30,9 +30,7 @@ public class Main {
 			server = GrizzlyServerFactory.createHttpServer(getBaseURI() + "services/", rc, ioc);
 			server.start();
 			Thread.currentThread().join();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			if (server != null) {
