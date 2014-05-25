@@ -39,6 +39,7 @@ public class Main {
 			NetworkListener networkListener = new NetworkListener("jaxws-listener", "0.0.0.0", 8081);
 			server.getServerConfiguration().addHttpHandler(foodHttpHandler, "/food");
 			server.getServerConfiguration().addHttpHandler(orderHttpHandler, "/order");
+			server.getServerConfiguration().addHttpHandler(orderHttpHandler, "/currencyRate");
 			server.addListener(networkListener);
 
 			server.start();

@@ -1,6 +1,7 @@
 package service;
 
 import com.google.inject.Inject;
+import dao.CurrencyApiFacade;
 import dao.FoodDao;
 import dao.OrderDao;
 import model.Order;
@@ -11,6 +12,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Path("order")
@@ -21,6 +23,9 @@ public class OrderService {
 
 	@Inject
 	public FoodDao foodDao;
+
+	@Inject
+	public CurrencyApiFacade currencyApiFacade;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -56,5 +61,18 @@ public class OrderService {
 	@WebMethod
 	public void confirmOrder(@PathParam("id") @WebParam(name = "id") int id) {
 		orderDao.confirm(id);
+	}
+
+	@Path("{id}/priceInUsd")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@WebMethod
+	public String getOrderPriceInUsd(@PathParam("id") @WebParam(name = "id") int id) {
+		BigDecimal currentRate = currencyApiFacade.getCurrentRate();
+		Order order = orderDao.getById(id);
+		return currentRate
+				.multiply(BigDecimal.valueOf(order.getPrice()))
+				.setScale(4, BigDecimal.ROUND_HALF_UP)
+				.toString();
 	}
 }
