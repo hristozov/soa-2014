@@ -10,6 +10,7 @@ public class Order {
 	public int id;
 	public List<Food> contents;
 	public boolean confirmed = false;
+	public User user;
 
 	public Order(int id, List<Food> contents) {
 		this.id = id;

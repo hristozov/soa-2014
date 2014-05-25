@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import dao.CurrencyApiFacade;
 import dao.FoodDao;
 import dao.OrderDao;
+import dao.UserDao;
 import model.Order;
 import model.OrderAddRequest;
 
@@ -26,6 +27,9 @@ public class OrderService {
 
 	@Inject
 	public CurrencyApiFacade currencyApiFacade;
+
+	@Inject
+	public UserDao userDao;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -52,7 +56,7 @@ public class OrderService {
 	@POST
 	@WebMethod
 	public void addNew(@WebParam(name = "order") OrderAddRequest order) {
-		orderDao.add(order.getOrder(foodDao));
+		orderDao.add(order.getOrder(foodDao, userDao));
 	}
 
 	@Path("{id}/confirm")
