@@ -8,7 +8,7 @@ import java.util.List;
 
 @Singleton
 public class FoodDaoImpl implements FoodDao {
-	private List<Food> foods;
+	private final List<Food> foods;
 
 	public FoodDaoImpl() {
 		foods = new ArrayList();

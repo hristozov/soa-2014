@@ -8,7 +8,7 @@ import java.util.List;
 
 @Singleton
 public class UserDaoImpl implements UserDao {
-	private List<User> users;
+	private final List<User> users;
 
 	public UserDaoImpl() {
 		users = new ArrayList<>();

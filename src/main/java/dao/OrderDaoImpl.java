@@ -10,7 +10,7 @@ import java.util.List;
 
 @Singleton
 public class OrderDaoImpl implements OrderDao {
-	private List<Order> orders;
+	private final List<Order> orders;
 
 	@Inject
 	public OrderDaoImpl(FoodDao foodDao) {

@@ -2,7 +2,6 @@ package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.math.BigDecimal;
 import java.util.List;
 
 @XmlRootElement
