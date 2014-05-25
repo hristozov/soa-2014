@@ -10,8 +10,10 @@ import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.jaxws.JaxwsHandler;
+import service.CurrencyRateService;
 import service.FoodService;
 import service.OrderService;
+import service.UserService;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -36,10 +38,13 @@ public class Main {
 
 			HttpHandler foodHttpHandler = new JaxwsHandler(injector.getInstance(FoodService.class));
 			HttpHandler orderHttpHandler = new JaxwsHandler(injector.getInstance(OrderService.class));
+			HttpHandler currencyHttpHandler = new JaxwsHandler(injector.getInstance(CurrencyRateService.class));
+			HttpHandler userHttpHandler = new JaxwsHandler(injector.getInstance(UserService.class));
 			NetworkListener networkListener = new NetworkListener("jaxws-listener", "0.0.0.0", 8081);
 			server.getServerConfiguration().addHttpHandler(foodHttpHandler, "/food");
 			server.getServerConfiguration().addHttpHandler(orderHttpHandler, "/order");
-			server.getServerConfiguration().addHttpHandler(orderHttpHandler, "/currencyRate");
+			server.getServerConfiguration().addHttpHandler(currencyHttpHandler, "/currencyRate");
+			server.getServerConfiguration().addHttpHandler(userHttpHandler, "/user");
 			server.addListener(networkListener);
 
 			server.start();
