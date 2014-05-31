@@ -14,6 +14,7 @@ import service.CurrencyRateService;
 import service.FoodService;
 import service.OrderService;
 import service.UserService;
+import transport.JsonMessageBodyWriter;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class Main {
 		Injector injector = Guice.createInjector(new ServletModule() {
 			@Override
 			protected void configureServlets() {
+				this.bind(JsonMessageBodyWriter.class);
 			}
 		});
 		ResourceConfig rc = new PackagesResourceConfig("service");
