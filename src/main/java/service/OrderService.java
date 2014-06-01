@@ -1,10 +1,7 @@
 package service;
 
 import com.google.inject.Inject;
-import dao.CurrencyApiFacade;
-import dao.FoodDao;
-import dao.OrderDao;
-import dao.UserDao;
+import dao.*;
 import model.Order;
 import model.OrderAddRequest;
 
@@ -23,13 +20,13 @@ public class OrderService {
 	public OrderDao orderDao;
 
 	@Inject
-	public FoodDao foodDao;
-
-	@Inject
 	public CurrencyApiFacade currencyApiFacade;
 
 	@Inject
 	public UserDao userDao;
+
+	@Inject
+	public MenuDao menuDao;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -56,7 +53,7 @@ public class OrderService {
 	@POST
 	@WebMethod
 	public void addNew(@WebParam(name = "order") OrderAddRequest order) {
-		orderDao.add(order.getOrder(foodDao, userDao));
+		orderDao.add(order.getOrder(menuDao, userDao));
 	}
 
 	@Path("{id}/confirm")

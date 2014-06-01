@@ -1,6 +1,7 @@
 package model;
 
 import dao.FoodDao;
+import dao.MenuDao;
 import dao.UserDao;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,16 +10,16 @@ import java.util.List;
 
 @XmlRootElement
 public class OrderAddRequest {
-	public List<Integer> contents;
+	public Integer menu = -1;
 	public final int user = -1;
 
-	public Order getOrder(FoodDao dao, UserDao userDao) {
+	public Order getOrder(MenuDao menuDao, UserDao userDao) {
 		Order result = new Order();
 		User user = userDao.getById(this.user);
 		List<Food> contents = new ArrayList<>();
-		if (contents != null) {
-			for (Integer foodId : this.contents) {
-				Food food = dao.getById(foodId);
+		Menu targetMenu = menuDao.getById(menu);
+		if (targetMenu != null) {
+			for (Food food : targetMenu.contents) {
 				if (food != null) {
 					contents.add(food);
 				}
